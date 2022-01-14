@@ -30,6 +30,13 @@ Anderenfalls sendet er:
 Implementieren Sie den Server auf Port 7777 sowie einen Client zum Testen.
 
 ## Umsetzung
+Im Folgenden wird kurz die Vorgehensweise innerhalb der beiden Java-Klassen erklärt. Weitere Erklärungen können 
+innerhalb der Code-Dokumentation gefunden werden.
+
+### Client.java
+
+
+### Server.java
 
 
 ## Beispiele
