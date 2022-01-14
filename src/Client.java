@@ -54,17 +54,17 @@ public class Client {
 
             } catch (UnknownHostException e) {
                 // bei Auftritt einer UnknownHostException: Fehlerausgabe und Beenden des Programms
-                System.err.println("ERROR: " + e + "\nThe required host could not be found. Exiting program...");
+                System.err.println("FAILED: " + e + "\nThe required host could not be found. Exiting program...");
                 break;
 
             } catch (IOException e) {
                 // bei Auftritt einer IOException: Fehlerausgabe und Beenden des Programms
-                System.err.println("ERROR: " + e + "\nFailed to establish the connection. Exiting program...");
+                System.err.println("FAILED: " + e + "\nFailed to establish the connection. Exiting program...");
                 break;
 
             } catch (Exception e) {
                 // bei Auftritt einer unbekannten Exception: Fehlerausgabe und Beenden des Programms
-                System.err.println("ERROR: " + e + "\nSomething went wrong. Exiting program...");
+                System.err.println("FAILED: " + e + "\nSomething went wrong. Exiting program...");
                 break;
 
             // Ausführung von finally am Ende jeder Iteration zum Schließen der verwendeten Ressourcen
@@ -97,7 +97,7 @@ public class Client {
                     } catch (IOException e) {
                         // bei Auftritt einer IOException: nur Fehlerausgabe --> Socket-Connection ist automatisch nicht
                         //                                 mehr verwendbar, sollte eine Exception auftreten
-                        System.err.println("ERROR: " + e + "\nFailed to close the socket accordingly.");
+                        System.err.println("FAILED: " + e + "\nFailed to close the socket accordingly.");
                     }
                 }
             } // Ende des try-catch-Blocks

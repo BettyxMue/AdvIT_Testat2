@@ -98,7 +98,7 @@ public class Server {
 
             } catch (IOException e){
                 // bei Auftritt einer IOException: Fehlerausgabe
-                System.err.println("ERROR: " + e + "\nFailed to establish a connection!");
+                System.err.println("FAILED: " + e + "\nFailed to establish a connection!");
 
             // Ausführung von finally am Ende jeder Iteration zum Schließen der verwendeten Ressourcen
             } finally {
@@ -114,7 +114,7 @@ public class Server {
                 } catch (IOException e) {
                     // bei Auftritt einer IOException: nur Fehlerausgabe --> Connection ist automatisch nicht mehr
                     //                                 verwendbar, sollte eine Exception auftreten
-                    System.err.println("ERROR: " + e + "\nFailed to close the connection accordingly.");
+                    System.err.println("FAILED: " + e + "\nFailed to close the connection accordingly.");
                 }
             }
         }
@@ -130,7 +130,7 @@ public class Server {
     public String process (String command) {
 
         // Erstellung und Vorinitialisierung der verwendeten Variablen
-        String output = "FAILURE";
+        String output = "FAILED";
         String key = "";
 
         // Aufspaltung des vom Benutzer eingegebenen Befehls, sodass der erste Ausdruck im Array gespeichert wird
@@ -141,7 +141,7 @@ public class Server {
         if (piece.length < 2) {
             // Ist das Array kürzer als 2, wird ein Fehler geworfen.
             // TODO Why?
-            return "FAILURE: A wrong command was used!";
+            return "FAILED: A wrong command was used!";
         }
 
         // Ist der erste Ausdruck des Arrays "SAVE", führe folgenden Code aus:
@@ -162,7 +162,7 @@ public class Server {
 
                 } catch (IOException e) {
                     // bei Auftreten einer IOException bei der File-Erzeugung: Fehlerausgabe
-                    output = "ERROR: " + e + "\nProgram failed to create the corresponding file in the given directory!";
+                    output = "FAILED: " + e + "\nProgram failed to create the corresponding file in the given directory!";
                 }
             }
 
@@ -179,7 +179,7 @@ public class Server {
 
             } catch (Exception e){
                 // bei Auftreten einer beliebigen Exception: Fehlerausgabe
-                output = "ERROR: " + e + "\nProgram failed to save the content or its key!";
+                output = "FAILED: " + e + "\nProgram failed to save the content or its key!";
             }
 
         // Ist der erste Ausdruck des Arrays "GET", führe folgenden Code aus:
@@ -206,11 +206,11 @@ public class Server {
 
             } catch (Exception e){
                 // bei Auftreten einer beliebigen Exception: Fehlerausgabe
-                output = "ERROR: " + e + "\nProgram failed to get the key or its content!";
+                output = "FAILED: " + e + "\nProgram failed to get the key or its content!";
             }
         } else {
             // Ist der erste Ausdruck keiner der definierten Befehle, teile dem Benutzer die möglichen Befehle mit.
-            output = "ERROR: The given command is unknown! Please use the commands 'SAVE <Input>', 'GET <Key>' or 'EXIT'.";
+            output = "FAILED: The given command is unknown! Please use the commands 'SAVE <Input>', 'GET <Key>' or 'EXIT'.";
         }
 
         // Ausgabe des Variable "output" mit dem jeweiligen belegten String
@@ -237,13 +237,13 @@ public class Server {
                 // Überprüfung, ob der angegebene Port nicht zwischen 0 und 65.536 liegt
                 if (port < 0 || port >= 65536) {
                     // trifft dies zu: Ausgabe einer Fehlermeldung und Beenden des Programms
-                    System.err.println("ERROR: The port must be between 0 and 65535. Exiting program...");
+                    System.err.println("FAILED: The port must be between 0 and 65535. Exiting program...");
                     return;
                 }
 
             } catch (NumberFormatException e) {
                 // bei Auftreten einer NumberFormatException durch das Parsen: Fehlerausgabe und Beenden des Programms
-                System.err.println("ERROR: " + e + "\nSomething failed to work. Exiting program...");
+                System.err.println("FAILED: " + e + "\nSomething failed to work. Exiting program...");
                 return;
             }
         }
