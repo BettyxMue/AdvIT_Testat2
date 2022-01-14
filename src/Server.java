@@ -74,21 +74,22 @@ public class Server {
         while (true) {
             try {
 
-                //
+                // Akzeptieren der Verbindung zum Server oder Warten bis eine Verbindung aufgebaut / angefragt wird
                 connection = serverS.accept();
                 System.out.println("SUCCESS: Connection was accepted by the client!");
 
-                //
+                // Initialisierung des Readers für einkommende Nachrichten
                 in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                // Initialisierung des Writers zum Schreiben des Outputs
                 out = new PrintWriter(connection.getOutputStream());
 
-                //
+                // Einlesen und Speicherung des Befehls vom Benutzer-Input in einer Variable
                 command = in.readLine();
-                //
-                if (command != null) {
-                    //
+                // Überprüfung, ob Variable "beschrieben" ist
+                if (command != "") {
+                    // besitzt Variable einen String-Wert --> Weitergabe an process-Methode
                     result = process(command);
-                    //
+                    // Ausgabe des Rückgabewerts aus process-Methode durch Writer des Output-Streams
                     out.println(result);
                 }
 
@@ -120,90 +121,99 @@ public class Server {
     }
 
     /**
-     * Einstiegspunkt des Programms "Server.java"
+     * Diese Methode dient der Verarbeitung der Benutzer-Eingabe. Dazu gehört die Eingabe und Speicherung des Benutzer-
+     * Inputs, das Finden und Ausgeben von bereits Gespeichertem oder die Fehlerbehandlung bei falschen Befehlen.
      *
      * @param command - Input eines Befehls vom User aus der Standardeingabe
      * @return String - Rückgabe der Varaible "output"
      */
     public String process (String command) {
 
-        //
+        // Erstellung und Vorinitialisierung der verwendeten Variablen
         String output = "FAILURE";
         String key = "";
 
-        //
+        // Aufspaltung des vom Benutzer eingegebenen Befehls, sodass der erste Ausdruck im Array gespeichert wird
         String[] piece = command.split(" ", 2);
 
-        //
+        // Überprüfung auf Länge des oben definierten Arrays
+        // TODO Test it
         if (piece.length < 2) {
+            // Ist das Array kürzer als 2, wird ein Fehler geworfen.
+            // TODO Why?
             return "FAILURE: A wrong command was used!";
         }
 
-        //
+        // Ist der erste Ausdruck des Arrays "SAVE", führe folgenden Code aus:
         if (piece[0].equalsIgnoreCase("SAVE")) {
 
-            //
+            // Generieren eines eindeutigen Schlüssels für jeden neue Nachricht
             key = generateKey();
-            //
+            // Generieren eines File-Objekts mit dem vorher generierten Schlüssel als Dateiname, welches im oben
+            // definierten Pfad abgelegt werden soll
             File f = new File(PATH, key + ".txt");
 
-            //
+            // Überprüfung auf Existenz dieser Datei
             if(!f.exists()) {
                 try {
-                    //
+                    // Ist diese Datei noch nicht vorhanden, wird sie im entsprechenden Order angelegt.
                     f.createNewFile();
                     System.out.println("SUCCESS: A new file with the name " + f + " was created!");
 
                 } catch (IOException e) {
-                    //
+                    // bei Auftreten einer IOException bei der File-Erzeugung: Fehlerausgabe
                     output = "ERROR: " + e + "\nProgram failed to create the corresponding file in the given directory!";
                 }
             }
 
             try {
 
-                //
+                // Erstellung und Initialisierung eines FileWriters zum Speichern des Benutzer-Inputs in einer Datei
                 PrintWriter pw = new PrintWriter(new FileWriter(f));
+                // Schreiben des Benutzer-Inputs nach dem Befehl in die Datei
                 pw.println(piece[1]);
                 output = "KEY: "+ key + "\nSUCCESS: The key was successfully saved in the corresponding directory!";
+                // Senden der Nachricht, sodass diese auch wirklich durchkommt
                 pw.flush();
                 pw.close();
 
             } catch (Exception e){
-                //
+                // bei Auftreten einer beliebigen Exception: Fehlerausgabe
                 output = "ERROR: " + e + "\nProgram failed to save the content or its key!";
             }
 
-        //
+        // Ist der erste Ausdruck des Arrays "GET", führe folgenden Code aus:
         } else if (piece[0].equalsIgnoreCase("GET")) {
 
-            //
+            // Speichern des eindeutigen Schlüssels einer Datei (eingegeben durch Benutzer) in der Variable "key"
             key = piece[1];
 
             try {
 
-                //
+                // Erstellung und Initialisierung eines BufferedReaders für den angegebenen Schlüssel
                 BufferedReader br = new BufferedReader(new FileReader(PATH + key + ".txt"));
+                // Einlesen des Inhalts dieser Datei in die Variable "output"
                 output = br.readLine();
 
-                //
+                // Überprüfung, ob die Variable "output" befüllt ist
                 if (output != null) {
+                    // Besitzt diese einen String-Wert, so wird dieser dem Benutzer ausgegeben.
                     output = "The command is OK! OUTPUT: " + output;
                 }
 
-                //
+                // zum Ende: Schließen des Readers
                 br.close();
 
             } catch (Exception e){
-                //
+                // bei Auftreten einer beliebigen Exception: Fehlerausgabe
                 output = "ERROR: " + e + "\nProgram failed to get the key or its content!";
             }
         } else {
-            //
+            // Ist der erste Ausdruck keiner der definierten Befehle, teile dem Benutzer die möglichen Befehle mit.
             output = "ERROR: The given command is unknown! Please use the commands 'SAVE <Input>', 'GET <Key>' or 'EXIT'.";
         }
 
-        //
+        // Ausgabe des Variable "output" mit dem jeweiligen belegten String
         return output;
     }
 
@@ -214,31 +224,31 @@ public class Server {
      */
     public static void main(String[] args) {
 
-        //
+        // Setzen des Ports auf den oben initialisierten Standardport
         int port = DEFAULT_PORT;
 
-        //
+        // Überprüfung auf Länge des mitgegebenen Arrays "args", welches unter anderem die Portnummer beinhaltet
         if (args.length > 0) {
             try {
 
-                //
+                // Überführung der Portnummer in eine Zahl im Integer-Format zur Validierung
                 port = Integer.parseInt(args[0]);
 
-                //
+                // Überprüfung, ob der angegebene Port nicht zwischen 0 und 65.536 liegt
                 if (port < 0 || port >= 65536) {
-                    //
+                    // trifft dies zu: Ausgabe einer Fehlermeldung und Beenden des Programms
                     System.err.println("ERROR: The port must be between 0 and 65535. Exiting program...");
                     return;
                 }
 
             } catch (NumberFormatException e) {
-                //
+                // bei Auftreten einer NumberFormatException durch das Parsen: Fehlerausgabe und Beenden des Programms
                 System.err.println("ERROR: " + e + "\nSomething failed to work. Exiting program...");
                 return;
             }
         }
 
-        //
+        // eigentliche Initialisierung eines Server-Objekts und Start von diesem
         Server server = new Server(port);
         server.start();
     }
