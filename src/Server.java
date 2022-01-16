@@ -133,14 +133,18 @@ public class Server {
         String output = "FAILED";
         String key = "";
 
+        // Wird kein Befehl auf Grund von "EXIT" übergeben, würde er sonst beim Aufrufen von "split" in einen Fehler
+        // laufen. Durch vorherige Überprüfung soll dies vermieden werden.
+        if (command == null) {
+            return "FAILED: Something failed on the client-side. Closing the server...";
+        }
+
         // Aufspaltung des vom Benutzer eingegebenen Befehls, sodass der erste Ausdruck im Array gespeichert wird
         String[] piece = command.split(" ", 2);
 
         // Überprüfung auf Länge des oben definierten Arrays
-        // TODO Test it
         if (piece.length < 2) {
             // Ist das Array kürzer als 2, wird ein Fehler geworfen.
-            // TODO Why?
             return "FAILED: A wrong command was used!";
         }
 
@@ -158,7 +162,7 @@ public class Server {
                 try {
                     // Ist diese Datei noch nicht vorhanden, wird sie im entsprechenden Order angelegt.
                     f.createNewFile();
-                    System.out.println("SUCCESS: A new file with the name " + f + " was created!");
+                    System.out.println("SUCCESS: A new file with the path " + f + " was created!");
 
                 } catch (IOException e) {
                     // bei Auftreten einer IOException bei der File-Erzeugung: Fehlerausgabe
@@ -208,6 +212,7 @@ public class Server {
                 // bei Auftreten einer beliebigen Exception: Fehlerausgabe
                 output = "FAILED: " + e + "\nProgram failed to get the key or its content!";
             }
+
         } else {
             // Ist der erste Ausdruck keiner der definierten Befehle, teile dem Benutzer die möglichen Befehle mit.
             output = "FAILED: The given command is unknown! Please use the commands 'SAVE <Input>', 'GET <Key>' or 'EXIT'.";
