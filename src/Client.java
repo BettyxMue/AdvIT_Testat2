@@ -27,7 +27,7 @@ public class Client {
                 // Muss auf Grund der Schließung am Ende der Iteration zum Neustart der Schleife immer erneut geöffnet
                 // werden.
                 s = new Socket(host, SERVER_PORT);
-                System.out.println("SUCCESS: Connected to server!\nPlease enter a command:");
+                System.out.println("\nSUCCESS: Connected to server!\nPlease enter a command:");
 
                 // Erstellung eines Buffered Readers zur Entgegennahme des Benutzer-Inputs
                 BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
@@ -78,7 +78,7 @@ public class Client {
 
                     } catch (IOException e) {
                         // bei Auftritt einer IOException: nur Fehlerausgabe --> Connection wird sowieso geschlossen
-                        System.err.println("ERROR: " + e + "\nFailed to exit the input stream.");
+                        System.err.println("FAILED: " + e + "\nFailed to exit the input stream accordingly.");
                     }
                 }
 
