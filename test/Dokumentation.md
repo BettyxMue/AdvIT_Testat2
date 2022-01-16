@@ -165,7 +165,8 @@ In den folgenden Beispielen wird genauer auf den Befehl "SAVE" eingegangen.
 #### "SAVE Hallo Welt, ein schöner Tage heute, nicht wahr?"
 In diesem ersten Beispiel soll getestet werden, ob das Programm wie gefordert mittels des Kommandos "SAVE" den String in
 einer Datei im entsprechenden Order speichert und mit einem eindeutigen Schlüssel verseht. Der dafür verwendete Text 
-lautet: "Hallo Welt, ein schöner Tage heute, nicht wahr?".
+lautet: "Hallo Welt, ein schöner Tage heute, nicht wahr?". Es können aber auch Zahlen oder bestimmte Sonderzeichen
+mitgegeben werden.
 
 ##### Ausgabe
 Die Konsolenausgabe des **Clients** sieht für dieses Beispiel wie folgt aus:
@@ -183,7 +184,7 @@ SUCCESS: A new file with the path C:\Users\{user}\Desktop\Messages\6d7ba594-1ff2
 ATTENTION: Connection will be closed now!
 ```
 
-#### Auswertung
+##### Auswertung
 Wie man an der Ausgabe sehen kann, wird eine neue Datei mit dem erzeugten Schlüssel im angegebenen Ordner angelegt. Der
 Inhalt dieser Datei ist der eingegebene String. Dies lässt sich leicht beim manuellen Öffnen der Datei im Ordner 
 überprüfen. Danach ist sowohl der Server als auch der Client bereit für eine weitere Eingabe.
@@ -210,7 +211,7 @@ SUCCESS: A new file with the path C:\Users\{user}\Desktop\Messages\277b85b9-7c6d
 ATTENTION: Connection will be closed now!
 ```
 
-#### Auswertung
+##### Auswertung
 Wie man an der Ausgabe sehen kann, wird eine neue Datei mit dem erzeugten Schlüssel im angegebenen Ordner angelegt. Der
 Inhalt dieser Datei ist der eingegebene String. Dies lässt sich leicht beim manuellen Öffnen der Datei im Ordner
 überprüfen. Danach ist sowohl der Server als auch der Client bereit für eine weitere Eingabe. Der Befehl wird also 
@@ -239,7 +240,7 @@ SUCCESS: Connection was accepted by the client!
 ATTENTION: Connection will be closed now!
 ```
 
-#### Auswertung
+##### Auswertung
 Wie man oben erkennen kann, wir der Befehl anerkannt, woraufhin der Inhalt der vorher angelegten Datei ausgelesen und in
 der Konsole ausgegeben wird. Danach ist sowohl der Server als auch der Client bereit für eine weitere Eingabe.
 
@@ -264,7 +265,7 @@ SUCCESS: Connection was accepted by the client!
 ATTENTION: Connection will be closed now!
 ```
 
-#### Auswertung
+##### Auswertung
 Wie man oben erkennen kann, wir der Befehl anerkannt (obwohl er kleingeschrieben ist), woraufhin der Inhalt der vorher 
 angelegten Datei ausgelesen und in der Konsole ausgegeben wird. Danach ist sowohl der Server als auch der Client bereit 
 für eine weitere Eingabe.
@@ -289,7 +290,7 @@ SUCCESS: Connection was accepted by the client!
 ATTENTION: Connection will be closed now!
 ```
 
-#### Auswertung
+##### Auswertung
 Wie man oben erkennen kann, wird dem Benutzer zu verstehen gegeben, dass die Datei nicht gefunden werden kann. Jedoch
 stürzt auch hier das Programm nicht ab, sondern der Benutzer kann danach weiter Eingaben vornehmen, da dieser Befehler 
 vom Programm behandelt wird und die entsprechende Fehlermeldung ausgibt.
@@ -315,7 +316,7 @@ SUCCESS: Connection was accepted by the client!
 ATTENTION: Connection will be closed now!
 ```
 
-#### Auswertung
+##### Auswertung
 Der Benutzer wird über das Schließen des Clients informiert. Der Server bleibt dabei jedoch erhalten und wartet auf 
 weitere eingehende Connections von Clients. Er müsste manuell beendet werden.
 
@@ -337,7 +338,7 @@ SUCCESS: Connection was accepted by the client!
 ATTENTION: Connection will be closed now!
 ```
 
-#### Auswertung
+##### Auswertung
 Der Benutzer wird über das Schließen des Clients informiert. Der Server bleibt dabei jedoch erhalten und wartet auf
 weitere eingehende Connections von Clients. Er müsste manuell beendet werden. Somit wird der Befehl anerkannt, obwohl er
 kleingeschrieben ist.
@@ -366,7 +367,7 @@ SUCCESS: Connection was accepted by the client!
 ATTENTION: Connection will be closed now!
 ```
 
-#### Auswertung
+##### Auswertung
 Wie erwartet erkennt das Programm den Befehl nicht an, speichert den String somit auch nicht ab und generiert keinen
 Schlüssel dafür. Stattdessen erfolgt eine Fehlerausgabe und einen Hinweis an den Benutzer, welche Befehle existieren. 
 Der Server bleibt trotz dieser fehlerhaften Eingabe offen für weitere Connection-Anfragen und auch der Client schließt
@@ -390,7 +391,7 @@ ATTENTION: Connection will be closed now!
 SUCCESS: Connection was accepted by the client!
 ```
 
-#### Auswertung
+##### Auswertung
 Das Verfahren entspricht dem gleichen wie im vorherigen Beispiel. Denn auch wenn der String leer ist, wird er wie ein
 falscher Befehl behandelt.
 
@@ -408,7 +409,7 @@ FAILED: java.net.ConnectException: Connection refused: connect
 Failed to establish the connection. Exiting program...
 ```
 
-#### Auswertung
+##### Auswertung
 Wie man an der Ausgabe erkennt, wird dem Benutzer eine Fehlermeldung ausgegeben, die besagt, dass die Verbindungen 
 fehlgeschlagen ist. Daraufhin beendet sich der Client von alleine, was auf eine entsprechende Fehlerbehandlung hinweist,
 da er nicht abstürzt.
@@ -425,7 +426,7 @@ ATTENTION: Message Folder at the corresponding path does not exist.
 Creating one...
 ```
 
-#### Auswertung
+##### Auswertung
 Wie man an der Ausgabe und später auf dem Desktop erkennt, erstellt das Programm den benötigten Ordner von selbst und 
 kann daraufhin die eingegebenen Befehle in diesen einlesen oder Ausgeben. Das Programm stürzt also nicht ab, sondern
 kann nach Ordnererstellung sofort wieder Befehle entgegennehmen.
